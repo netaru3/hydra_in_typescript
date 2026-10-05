@@ -30,6 +30,8 @@ The default wordlist is the one used in the example
 
 --username: Expects a Boolean; if true, it will crack the username
 
+--dns: Expects a Boolean, if true wird die IP-Adresse anstelle der Domain eingeben
+
 
 Use --password true when you want to crack a password (by including the username in the body), and use --username true when you want to crack a username knowing the password (by including the password in the body)
 
