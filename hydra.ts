@@ -16,6 +16,7 @@ const yarg= yargs(hideBin(process.argv))
 .option("password",{type:"boolean"}) // if you want to crack for bruteforce the password, you put --password true
 .option("v",{type:"number",default:10})
 .option("content",{default:"application/json"})
+.option("dns",{type:"boolean",default:false})
 .parseSync()
 
 
@@ -40,11 +41,11 @@ const agent = new https.Agent({
 })
 
 
-let ip= (await dns.lookup(urlObj.hostname)).address
+let ip= (await dns.lookup(urlObj.hostname,{family:4})).address
 
 urlObj.hostname=ip
 
-const trueurl= urlObj.href
+let trueurl= urlObj.href
 
 console.log("url:",trueurl)
 let wordlist= fs.readFileSync(yarg.wordlist).toString().split("\n")
@@ -139,6 +140,7 @@ async function worker(){ console.log("worker iniciado")
 
 //code
 
+if(yarg.dns===false){trueurl=urloriginal}
 console.warn("WARNING: in the body the username comes first and the password comes second. NO excepctions")
 
 if(yarg.username===true && yarg.password===true){console.log("you can't to crack the username and password at the same time"); process.exit(1)}
